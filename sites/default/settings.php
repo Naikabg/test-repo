@@ -295,7 +295,7 @@ $config_directories = array();
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = 'xxHThAVc0apEDuYWchKbD20LztFk1rrujLn6nxuePtMMHAaaRIm2n-MWx3wVQFGAfn_hqeerpg';
 
 /**
  * Deployment identifier.
@@ -779,7 +779,21 @@ $settings['entity_update_batch_size'] = 50;
  *
  * Keep this code block at the end of this file to take full effect.
  */
-#
-# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#   include $app_root . '/' . $site_path . '/settings.local.php';
-# }
+
+
+$databases['default']['default'] = array (
+  'database' => 'drupal8',
+  'username' => 'root',
+  'password' => 'root',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['install_profile'] = 'standard';
+$config_directories['sync'] = 'sites/default/files/config_t0l0qWHEP6VDVz4iBQ4BoUTdBOcwf5b8KaLXnjUoR21KfmyDnWIWU_icf-wyuH0fKvvbyYQ1eA/sync';
+
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
