@@ -1,0 +1,180 @@
+<?php
+/**
+ * @file
+ * Process and preprocess hooks.
+ */
+
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
+function newtheme_theme_suggestions_image_formatter_alter(array &$suggestions, array $variables) {
+  $entity = $variables['item']->getEntity();
+  $field_name = $variables['item']->getParent()->getName();
+  $suggestions[] = 'image_formatter__' . $entity->getEntityTypeId() . '__' . $entity->bundle() . '__' . $field_name;
+}
+
+function newtheme_preprocess_views_view_fields__news__page_1(&$variables) {
+  $variables['#attached']['library'][] = 'newtheme/colorbox';
+}
+
+function newtheme_preprocess_node__news__teaser(&$vars) {
+  //kint(array_keys($vars));
+ // print_r ($vars['elements']['field_images'][0]);
+    //$node = $vars['node'];
+//  kint($node->getFieldDefinitions());
+
+  //print_r($node->field_images->get(0)->getProperties());
+
+  $options = array(
+    'query'      => ['destination' => 'news'],
+    'attributes' => ['class' => ['colorbox-load']],
+    'absolute'   => TRUE,
+  );
+  $link = Link::fromTextAndUrl(t('Edit Link'), Url::fromUri('internal:/admin/structure/block/manage/'.$newclass, $options))->toString();
+
+  $vars['only_first_image'] = $vars['elements']['field_images'][0];
+
+//  $vars['node']->field_images->delete();
+//  echo $vars['elements']['field_images'];
+//  $vars['elements']['field_images'][0] = $vars['only_first_image'];
+//  return $vars['elements']['field_images'];
+
+    //kint($vars);
+//    $nid = $vars['node']->nid;
+//    //$images = $node->field_news_image;
+//    $images = $vars['node']['field_news_image'];
+//    array_unshift($vars['node'], array('field_news_images' => $images));
+//    unset($nid['field_news_image']);
+//    $vars['node']['field_news_image']['#items'][0]['alt'] = 'asd';
+
+
+
+
+  //print_r($vars['elements']['field_images'][0]['#item']->getValue());
+
+  //kint(array_keys($node->field_images->get(0)->getProperties()));
+
+  //kint(array_keys($vars['node']['field_images'][0]->getProperties()));
+
+  //kint(array_keys($vars['elements']['field_images'][0]));
+
+  //echo $vars['field_images']->get(0)->get('src');
+  //echo $vars['node'];
+  //$view_mode = $vars['view_mode'];
+  //$node = $vars['node']->type->entity;
+  //dump($vars['node']);
+  //kint($vars['']);
+//  if ($view_mode == 'teaser') {
+//    $node_type = $node->type->entity;
+//    echo $node_type;
+//  }
+
+
+  // Adding class depending on the view mode and the node's content type.
+  $view_mode = $vars['view_mode'];
+    $node = $vars['node'];
+    $node_type = strtolower($node->type->entity->label());
+    if (!empty($view_mode) && !empty($node_type)) {
+    $vars['attributes']['class'][] = 'node-'. $view_mode . '-' . $node_type;
+  }
+
+  // Adding link for the admin user
+    $user_id = $vars['user']->id();
+    $options = array(
+      'attributes' => ['class' => ['btn-edit-admin']],
+      'absolute'   => TRUE,
+    );
+    $link = Link::fromTextAndUrl(t('Edit User Profile'), Url::fromUri('internal:/user/'.$user_id.'/edit/', $options))->toString();
+    $vars['btn_edit_admin_link'] = $link;
+}
+
+function newtheme_preprocess_views_view_field__news__page_1__image_style(&$variables) {
+//  print_r(file_url(node.field_image.entity.fileuri));
+  //dpm($variables['view']->id);
+  //$node = $variables['node'];
+  //$variables['image_url'] = file_create_url($node->field_image->entity->uri);
+
+  //print $variables['image_url']->field_image;
+
+  //echo $variables['output'];
+
+  //$images = $variables['output'];
+
+//  foreach ($images as $key => $image) {
+//    $variables['output'] .= "this is the " . $image[$key];
+//
+//   // $variables['output'] = $variables['output'][0];
+//  }
+//  if ($vars['#typeof'] == "foaf:Image") {
+//    print_r("We've made it!");
+//  }
+//  $vars['theme_hook_original'] = 'custom-image-class';
+//  if ($vars["type"] == "foaf:Image") {
+//    print_r("It's an image");
+//  }
+//
+//  if ($vars["view_mode"] == "teaser") {
+//    print_r("Theme hook");
+//  }
+}
+
+//function newtheme_theme_suggestions_image_alter(&$suggestions, $vars, $hook) {
+//
+//}
+
+//function newtheme_preprocess_field__images(&$vars) {
+//  $element = $vars['element'];
+//  echo "It's an image";
+//  // Field type image
+//  if ($element['#field_type'] == 'image') {
+//    // Reduce number of images in teaser view mode to single image
+//    if ($element['#view_mode'] == 'teaser') {
+//      $item = reset($vars['items']);
+//      $vars['items'] = array($item);
+//    }
+//  }
+//}
+
+// Adding classes to the body depending on the visible and not empty sidebars
+function newtheme_preprocess_html(&$vars) {
+  if (!empty($vars['page']['sidebar_first']) && !empty($vars['page']['sidebar_second'])) {
+    $vars['attributes']['class'][] = 'sidebar-both';
+  }
+  elseif (!empty($vars['page']['sidebar_first'])) {
+    $vars['attributes']['class'][] = 'sidebar-left';
+  }
+  elseif (!empty($vars['page']['sidebar_second'])) {
+    $vars['attributes']['class'][] = 'sidebar-right';
+  }
+  else {
+    $vars['attributes']['class'][] = 'sidebar-none';
+  }
+}
+
+// Adding template suggestion for page depending on the node type
+function newtheme_theme_suggestions_page_alter(&$suggestions,&$vars) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $suggestions[] = 'page_' . $node->getType();
+  }
+}
+
+function newtheme_preprocess_block(&$vars) {
+    // Adding classes to blocks
+    $newclass = $vars['elements']['#id'];
+    $vars['attributes']['class'][] = 'custom-class-'.$newclass;
+
+    // Adding links to edit the block
+    $options = array(
+      'query'      => ['destination' => 'news'],
+      'attributes' => ['class' => ['btn-edit-block']],
+      'absolute'   => TRUE,
+    );
+    $link = Link::fromTextAndUrl(t('Edit Link'), Url::fromUri('internal:/admin/structure/block/manage/'.$newclass, $options))->toString();
+    $vars['admin_block_edit_link'] = $link;
+}
+
+
+function newtheme_preprocess_region(&$vars) {
+  //kint($vars);
+  //echo $vars['#markup'];
+}

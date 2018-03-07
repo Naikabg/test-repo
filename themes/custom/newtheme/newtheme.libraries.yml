@@ -5,3 +5,13 @@ global-assets:
       assets/css/styles.css: {}
   js:
     assets/js/script.js: {}
+
+colorbox:
+  version: VERSION
+  css:
+      theme:
+        assets/js-source/colorbox.css: {}
+  js:
+    assets/js-source/jquery.colorbox.js: {}
+  dependencies:
+      - core/jquery
