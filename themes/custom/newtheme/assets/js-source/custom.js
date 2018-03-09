@@ -1,8 +1,11 @@
-(function ($) {
-  Drupal.behaviors.consoleLog = {
-    attach: function (context, settings) {
-      console.log('FFW FE theme1');
-      $('.colorbox-load').colorbox();
-    }
-  };
-}(jQuery));
+// (function ($) {
+//   Drupal.behaviors.customJS = {
+//     attach: function (context, settings) {
+//       if ($('.colorbox-load').length) {
+//         $('.colorbox-load', context).colorbox(
+//           { 'maxWidth':'800px' }
+//         );
+//       }
+//     }
+//   };
+// }(jQuery));

@@ -1,2 +1,1 @@
-console.log('My custom js');
-
+console.log("My custom javascript goes here");

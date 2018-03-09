@@ -6,12 +6,13 @@ global-assets:
   js:
     assets/js/script.js: {}
 
-colorbox:
-  version: VERSION
-  css:
-      theme:
-        assets/js-source/colorbox.css: {}
-  js:
-    assets/js-source/jquery.colorbox.js: {}
-  dependencies:
-      - core/jquery
+#colorbox:
+#  version: VERSION
+#  css:
+#    theme:
+#      assets/js-source/libs/colorbox.css: {}
+#  js:
+#    assets/js-source/libs/jquery.colorbox.js: {}
+#  dependencies:
+#    - core/jquery
+#    - core/jquery.once

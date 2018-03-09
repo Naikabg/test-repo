@@ -25,12 +25,12 @@ function newtheme_preprocess_node__news__teaser(&$vars) {
 
   //print_r($node->field_images->get(0)->getProperties());
 
-  $options = array(
-    'query'      => ['destination' => 'news'],
-    'attributes' => ['class' => ['colorbox-load']],
-    'absolute'   => TRUE,
-  );
-  $link = Link::fromTextAndUrl(t('Edit Link'), Url::fromUri('internal:/admin/structure/block/manage/'.$newclass, $options))->toString();
+//  $options = array(
+//    'query'      => ['destination' => 'news'],
+//    'attributes' => ['class' => ['colorbox-load']],
+//    'absolute'   => TRUE,
+//  );
+//  $link = Link::fromTextAndUrl(t('Edit Link'), Url::fromUri('internal:/admin/structure/block/manage/'.$newclass, $options))->toString();
 
   $vars['only_first_image'] = $vars['elements']['field_images'][0];
 

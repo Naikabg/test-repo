@@ -98,7 +98,9 @@
   {% endif %}
 
   <div{{ content_attributes }}>
-    {{ only_first_image }}
+    <a href="{{ file_url(node.field_images.entity.fileuri) }}" class="colorbox-load">
+      {{ only_first_image }}
+    </a>
     {#{{ content }}#}
     {{ content.field_news_article_type }}
     {{ content.field_paragraph }}
