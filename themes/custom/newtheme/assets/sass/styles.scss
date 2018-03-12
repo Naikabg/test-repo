@@ -105,6 +105,9 @@
   - specific UI components
   ========================================================================== */
 
+  @import "stylesheets/components/components.site_branding";
+  @import "stylesheets/components/components.btn_edit_block";
+
 /* ==========================================================================
    #UTILITIES
    - utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class
